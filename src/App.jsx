@@ -4,9 +4,17 @@ import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
 import DifferentButton from "./components/button/button.jsx"
+import Form from "./components/forms/forms.jsx"
+import { bookFields} from "./config/configBooks.js"
+import { authorFields } from "./config/configAuthors.js"
 
 function App() {
   const [count, setCount] = useState(0)
+  const [activeForm, setActiveForm] = useState(null);
+
+  const handleSubmit = (type, data) => {
+    console.log(`Nuevo ${type}:`, data);
+  };
 
   return (
     <>
@@ -18,7 +26,7 @@ function App() {
         </div>
         <div>
           <h1>Ejemplo de Nicole</h1>
-          <DifferentButton socialName="Click si amas a Snoopy" /> 
+          <DifferentButton socialName="Snoopyyyy" />
           <p>
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
@@ -32,6 +40,35 @@ function App() {
       </section>
 
       <div className="ticks"></div>
+      <div style={{display: "flex", flexDirection: "column", alignItems: "center",
+        gap: 16, marginTop: 24
+      }}>
+        <div style={{ display: "flex", gap: 8 }}>
+          <DifferentButton
+            socialName="Crear libro"
+            onClick={() => setActiveForm(activeForm === "book" ? null : "book")}
+          />
+          <DifferentButton
+            socialName="Crear autor"
+            onClick={() => setActiveForm(activeForm === "author" ? null : "author")}
+          />
+        </div>
+
+        {activeForm === "book" && (
+          <Form
+            fields={bookFields}
+            submitLabel="Guardar libro"
+            onSubmit={(data) => handleSubmit("book", data)}
+          />
+        )}
+        {activeForm === "author" && (
+          <Form
+            fields={authorFields}
+            submitLabel="Guardar autor"
+            onSubmit={(data) => handleSubmit("author", data)}
+          />
+        )}
+      </div>
 
       <section id="next-steps">
         <div id="docs">
@@ -63,10 +100,10 @@ function App() {
           <p>Join the Vite community</p>
           <ul>
             <li>
-              <DifferentButton 
-              socialName= {"Github"} 
-              iconRef= {"/icons.svg#github-icon" }
-              siteRef={"https://github.com/vitejs/vite"}
+              <DifferentButton
+                socialName={"Github"}
+                iconRef={"/icons.svg#github-icon"}
+                siteRef={"https://github.com/vitejs/vite"}
               />
               <a href="https://www.youtube.com/watch?v=7Az8BQYzUDo&t=23s" target="_blank">
                 <svg

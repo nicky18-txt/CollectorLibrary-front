@@ -1,11 +1,10 @@
 import React from "react";
 import styles from "./button.module.css"
 
-let DifferentButton = ({ socialName, iconRef, siteRef}) => {
-    return (
-        
-        <a href={siteRef} target="_blank">
-            <button className={styles.btn}>
+let DifferentButton = ({ socialName, iconRef, siteRef, onClick, variant = "default", type = "button" }) => {
+    const botoncito = variant === "submit" ? styles.btnSubmit : styles.btn;
+    const content = (
+        <button className={botoncito} onClick={onClick} type={type}>
                 <svg
                     className={styles.btnIcon}
                     role="presentation"
@@ -15,7 +14,13 @@ let DifferentButton = ({ socialName, iconRef, siteRef}) => {
                     </svg>
                     {socialName}
             </button>
-        </a>  
+    );
+    return siteRef ? (
+        <a href={siteRef} target="_blank" style={{ textDecoration: 'none' }}>
+            {content}
+        </a>
+    ) : (
+        content
     );
 };
 
